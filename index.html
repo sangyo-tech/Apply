@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お申し込み | 産業技術アカデミー</title>
+<style>
+  :root {
+    --navy:        #0f1c35;
+    --navy-light:  #1e2e55;
+    --accent:      #3a7bd5;
+    --accent-light:#5c9ae8;
+    --gold:        #c8a84b;
+    --gold-light:  #e2c97a;
+    --green:       #22a06b;
+    --white:       #ffffff;
+    --text:        #e8edf8;
+    --text-muted:  #8a9bc0;
+    --border:      rgba(255,255,255,0.08);
+    --border-gold: rgba(200,168,75,0.35);
+    --glass:       rgba(255,255,255,0.04);
+    --glass-hover: rgba(255,255,255,0.07);
+    --error:       #e05c5c;
+    --success:     #22a06b;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Hiragino Kaku Gothic ProN','Hiragino Sans','Noto Sans JP',sans-serif;
+    background-color:var(--navy);
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:48px 48px;
+    color:var(--text); line-height:1.75;
+  }
+
+  /* HEADER */
+  header {
+    background:rgba(15,28,53,0.92); backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px); border-bottom:1px solid var(--border);
+    padding:0 2rem; position:sticky; top:0; z-index:100;
+  }
+  .header-inner {
+    max-width:1100px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; height:64px;
+  }
+  .logo { color:var(--white); font-size:1rem; font-weight:700; text-decoration:none; letter-spacing:0.04em; }
+  .logo span { color:var(--accent-light); }
+  nav { display:flex; gap:1.4rem; align-items:center; flex-wrap:wrap; }
+  nav a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.82rem; transition:color 0.2s; }
+  nav a:hover { color:var(--white); }
+  nav a.active { color:var(--gold); font-weight:700; }
+  .btn-login { background:var(--accent); color:var(--white)!important; padding:0.38rem 1rem; border-radius:4px; font-size:0.8rem!important; font-weight:600; }
+  .btn-login:hover { background:var(--accent-light)!important; }
+
+  /* HERO */
+  .hero {
+    position:relative; padding:6rem 2rem 4.5rem;
+    text-align:center; overflow:hidden;
+  }
+  .hero::before {
+    content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+    width:700px; height:500px;
+    background:radial-gradient(ellipse at center,rgba(58,123,213,0.18) 0%,rgba(200,168,75,0.07) 40%,transparent 68%);
+    pointer-events:none;
+  }
+  .hero::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,var(--border-gold),transparent); opacity:0.45;
+  }
+  .hero-label {
+    display:inline-flex; align-items:center; gap:0.5rem;
+    border:1px solid var(--border-gold); color:var(--gold);
+    font-size:0.7rem; font-weight:700; letter-spacing:0.22em;
+    padding:0.32rem 1.3rem; border-radius:2px; margin-bottom:1.8rem;
+    text-transform:uppercase; background:rgba(200,168,75,0.06);
+  }
+  .hero h1 { color:var(--white); font-size:clamp(2rem,5vw,3rem); font-weight:700; line-height:1.22; margin-bottom:1rem; }
+  .hero p { color:var(--text-muted); font-size:1rem; max-width:500px; margin:0 auto; }
+
+  /* FLOW */
+  .flow-section { padding:3.5rem 2rem; position:relative; }
+  .flow-section::before {
+    content:''; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,var(--border-gold),transparent); opacity:0.4;
+  }
+  .flow-inner { max-width:900px; margin:0 auto; }
+  .section-eyebrow { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.5rem; }
+  .section-eyebrow::before { content:''; width:32px; height:1px; background:linear-gradient(90deg,transparent,var(--border-gold)); }
+  .section-label { font-size:0.68rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); }
+  .section-title { font-size:clamp(1.3rem,2.5vw,1.7rem); font-weight:700; color:var(--white); margin-bottom:1.5rem; }
+
+  .flow-steps {
+    display:flex; align-items:flex-start;
+    gap:0; position:relative;
+  }
+  .flow-steps::before {
+    content:''; position:absolute; top:22px; left:22px; right:22px; height:1px;
+    background:linear-gradient(90deg,transparent,var(--border-gold),transparent); opacity:0.5; z-index:0;
+  }
+  .flow-step { flex:1; text-align:center; position:relative; z-index:1; }
+  .flow-num {
+    width:44px; height:44px; border-radius:50%;
+    background:var(--glass); border:1px solid var(--border-gold);
+    color:var(--white); font-size:1rem; font-weight:800;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 0.7rem;
+  }
+  .flow-step.active .flow-num {
+    background:linear-gradient(135deg,var(--accent),var(--accent-light));
+    border-color:var(--accent); box-shadow:0 0 16px rgba(58,123,213,0.4);
+  }
+  .flow-step-label { font-size:0.76rem; color:var(--text-muted); font-weight:600; line-height:1.4; }
+
+  /* PLAN SELECT */
+  .apply-layout {
+    max-width:1000px; margin:0 auto; padding:3rem 2rem;
+    display:grid; grid-template-columns:1fr 280px; gap:2.5rem; align-items:start;
+  }
+  .step-label-head { margin-bottom:1rem; }
+  .step-tag {
+    font-size:0.68rem; font-weight:700; letter-spacing:0.18em;
+    text-transform:uppercase; color:var(--gold);
+    display:flex; align-items:center; gap:0.4rem; margin-bottom:0.4rem;
+  }
+  .step-title { font-size:1.05rem; font-weight:700; color:var(--white); margin-bottom:1rem; }
+
+  .plan-select-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; margin-bottom:2.5rem; }
+  .plan-select-card {
+    background:var(--glass); border:1px solid var(--border);
+    border-radius:10px; padding:1.4rem;
+    cursor:pointer; transition:all 0.2s; position:relative;
+  }
+  .plan-select-card:hover { border-color:rgba(255,255,255,0.15); background:var(--glass-hover); }
+  .plan-select-card.selected { border-color:var(--border-gold); background:rgba(200,168,75,0.05); }
+  .plan-select-card .p-icon { font-size:1.6rem; margin-bottom:0.5rem; }
+  .plan-select-card .p-name { font-weight:700; color:var(--white); font-size:0.9rem; }
+  .plan-select-card .p-price { font-size:0.78rem; color:var(--gold); font-weight:600; margin-top:0.2rem; }
+  .plan-select-card .p-desc { font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem; }
+  .radio-check {
+    position:absolute; top:1rem; right:1rem;
+    width:18px; height:18px; border-radius:50%;
+    border:1px solid var(--border); background:transparent;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.2s;
+  }
+  .plan-select-card.selected .radio-check {
+    border-color:var(--gold); background:var(--gold);
+  }
+  .plan-select-card.selected .radio-check::after {
+    content:''; width:7px; height:7px; border-radius:50%; background:var(--navy);
+  }
+
+  /* FORM */
+  .form-card {
+    background:var(--glass); border:1px solid var(--border);
+    border-radius:14px; padding:2.2rem;
+  }
+  .form-title {
+    font-size:1rem; font-weight:700; color:var(--white);
+    margin-bottom:1.6rem; padding-bottom:1rem;
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .form-group { margin-bottom:1.3rem; }
+  .form-group label { display:block; font-size:0.83rem; font-weight:600; color:var(--text); margin-bottom:0.38rem; }
+  .form-group label .req { color:var(--error); font-size:0.7rem; margin-left:0.3rem; font-weight:700; }
+  .form-group label .opt { color:var(--text-muted); font-size:0.7rem; margin-left:0.3rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; padding:0.68rem 0.9rem;
+    background:rgba(255,255,255,0.05); border:1px solid var(--border);
+    border-radius:6px; font-size:0.88rem; font-family:inherit;
+    color:var(--text); transition:border-color 0.2s;
+    appearance:none; -webkit-appearance:none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color:var(--text-muted); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    outline:none; border-color:var(--gold);
+    box-shadow:0 0 0 3px rgba(200,168,75,0.12);
+    background:rgba(255,255,255,0.07);
+  }
+  .form-group select {
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238a9bc0' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 0.9rem center;
+    padding-right:2.2rem; cursor:pointer;
+    background-color:rgba(255,255,255,0.05);
+  }
+  .form-group select option { background:var(--navy-light,#1e2e55); color:var(--text); }
+  .form-group textarea { min-height:110px; resize:vertical; }
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+
+  .privacy-check {
+    display:flex; align-items:flex-start; gap:0.7rem;
+    margin:1.4rem 0; padding:1.1rem 1.2rem;
+    background:rgba(255,255,255,0.03); border:1px solid var(--border);
+    border-radius:8px; font-size:0.82rem; color:var(--text-muted);
+  }
+  .privacy-check input[type=checkbox] { width:17px; height:17px; flex-shrink:0; margin-top:2px; accent-color:var(--gold); }
+  .privacy-check a { color:var(--gold); }
+
+  .btn-submit {
+    width:100%; padding:0.95rem;
+    background:linear-gradient(135deg,var(--gold),var(--gold-light));
+    color:var(--navy); border:none; border-radius:8px;
+    font-size:0.95rem; font-weight:800; font-family:inherit;
+    cursor:pointer; transition:all 0.22s;
+    display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    box-shadow:0 4px 16px rgba(200,168,75,0.3);
+  }
+  .btn-submit:hover { box-shadow:0 7px 24px rgba(200,168,75,0.5); transform:translateY(-1px); }
+
+  .success-box {
+    display:none; background:rgba(34,160,107,0.08);
+    border:1px solid rgba(34,160,107,0.4); border-radius:12px;
+    padding:3rem; text-align:center;
+  }
+  .success-box .s-icon { font-size:3rem; margin-bottom:1rem; }
+  .success-box h3 { color:#5bd4a1; font-size:1.2rem; margin-bottom:0.5rem; }
+  .success-box p { color:var(--text-muted); font-size:0.88rem; }
+
+  /* SIDE */
+  .side-stack { display:flex; flex-direction:column; gap:1rem; position:sticky; top:80px; }
+  .side-card {
+    background:var(--glass); border:1px solid var(--border);
+    border-radius:12px; padding:1.6rem;
+  }
+  .side-card.gold-border { border-color:var(--border-gold); }
+  .side-title { font-size:0.88rem; font-weight:700; color:var(--white); margin-bottom:0.9rem; padding-bottom:0.8rem; border-bottom:1px solid var(--border); }
+  .info-list { list-style:none; display:flex; flex-direction:column; gap:0.65rem; }
+  .info-list li { font-size:0.8rem; color:var(--text-muted); display:flex; gap:0.5rem; }
+  .info-list li .ic { color:var(--gold); flex-shrink:0; }
+  .side-contact { margin-top:1.2rem; padding-top:1rem; border-top:1px solid var(--border); font-size:0.8rem; color:var(--text-muted); }
+  .side-contact a { color:var(--gold); text-decoration:none; }
+  .btn-side-outline {
+    display:block; text-align:center; margin-top:1rem;
+    background:transparent; color:var(--text-muted);
+    border:1px solid var(--border); border-radius:6px;
+    padding:0.6rem; font-size:0.83rem; font-weight:700; text-decoration:none;
+    transition:all 0.2s;
+  }
+  .btn-side-outline:hover { border-color:var(--border-gold); color:var(--gold); background:rgba(200,168,75,0.05); }
+
+  /* FOOTER */
+  footer { background:rgba(8,15,30,0.96); border-top:1px solid var(--border); padding:2.2rem 2rem; text-align:center; }
+  .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:1.8rem; margin-bottom:1.2rem; }
+  .footer-links a { color:rgba(255,255,255,0.3); text-decoration:none; font-size:0.77rem; transition:color 0.2s; }
+  .footer-links a:hover { color:rgba(255,255,255,0.65); }
+  footer p { color:rgba(255,255,255,0.18); font-size:0.74rem; }
+
+  @media (max-width:768px) {
+    .apply-layout { grid-template-columns:1fr; }
+    .side-stack { position:static; }
+    .form-row { grid-template-columns:1fr; }
+    .plan-select-grid { grid-template-columns:1fr; }
+    nav { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="https://sangyo-tech.github.io/top/" class="logo">産業技術<span>アカデミー</span></a>
+    <nav>
+      <a href="https://sangyo-tech.github.io/top/">TOP</a>
+      <a href="https://sangyo-tech-course.studio.site/">コース一覧</a>
+      <a href="https://sangyo-tech.github.io/Pricing/">料金</a>
+      <a href="https://sangyo-tech.github.io/about-us/">私たちについて</a>
+      <a href="#" class="active">お申し込み</a>
+      <a href="https://sangyo-tech-testt.ulizaportal.jp/" class="btn-login">ログイン</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">✦ APPLY</div>
+  <h1>お申し込み</h1>
+  <p>企業契約・無料体験・教材購入など、ご希望のプランをお選びいただきフォームにご記入ください。</p>
+</div>
+
+<!-- FLOW -->
+<div class="flow-section">
+  <div class="flow-inner">
+    <div class="section-eyebrow"><span class="section-label">FLOW</span></div>
+    <div class="section-title">お申し込みの流れ</div>
+    <div class="flow-steps">
+      <div class="flow-step active">
+        <div class="flow-num">1</div>
+        <div class="flow-step-label">フォーム<br>送信</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-step-label">担当者より<br>ご連絡</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-step-label">内容確認・<br>ご説明</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">4</div>
+        <div class="flow-step-label">契約・<br>アカウント発行</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-step-label">学習<br>開始</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPLY LAYOUT -->
+<div class="apply-layout">
+  <div>
+    <!-- STEP 1 -->
+    <div class="step-label-head">
+      <div class="step-tag">✦ STEP 1</div>
+      <div class="step-title">ご希望のプランを選択</div>
+    </div>
+    <div class="plan-select-grid">
+      <div class="plan-select-card selected" onclick="selectPlan(this,'企業契約プラン')">
+        <div class="radio-check"></div>
+        <div class="p-icon">🏭</div>
+        <div class="p-name">企業契約プラン</div>
+        <div class="p-price">1,000円 / 人・月（最低30,000円/月）</div>
+        <div class="p-desc">全コースへのアクセス・年間契約</div>
+      </div>
+      <div class="plan-select-card" onclick="selectPlan(this,'無料体験')">
+        <div class="radio-check"></div>
+        <div class="p-icon">🎓</div>
+        <div class="p-name">無料体験</div>
+        <div class="p-price">無料</div>
+        <div class="p-desc">品質管理 基礎コースの一部を体験</div>
+      </div>
+      <div class="plan-select-card" onclick="selectPlan(this,'大口・要相談（500名以上）')">
+        <div class="radio-check"></div>
+        <div class="p-icon">💼</div>
+        <div class="p-name">大口・要相談（500名以上）</div>
+        <div class="p-price">要お見積もり</div>
+        <div class="p-desc">専用料金・導入支援対応</div>
+      </div>
+      <div class="plan-select-card" onclick="selectPlan(this,'教材（品質大全）購入')">
+        <div class="radio-check"></div>
+        <div class="p-icon">📚</div>
+        <div class="p-name">教材（品質大全）購入</div>
+        <div class="p-price">20,000円 / 冊</div>
+        <div class="p-desc">動画コンテンツの内容を文章と資料でまとめた公式テキスト。購入は任意ですが、振り返りや必要な内容をすぐに確認したいときに便利です。</div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-label-head" style="margin-top:0.5rem;">
+      <div class="step-tag">✦ STEP 2</div>
+      <div class="step-title">お申し込み情報の入力</div>
+    </div>
+
+    <div class="form-card" id="formCard">
+      <div class="form-title">📋 お申し込みフォーム</div>
+      <form id="applyForm" onsubmit="handleSubmit(event)">
+        <input type="hidden" id="selectedPlan" value="企業契約プラン">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>会社名 <span class="req">必須</span></label>
+            <input type="text" name="company" placeholder="例：株式会社○○製作所" required>
+          </div>
+          <div class="form-group">
+            <label>業種 <span class="opt">任意</span></label>
+            <select name="industry">
+              <option value="">選択してください</option>
+              <option>医薬品・化粧品</option>
+              <option>医療機器</option>
+              <option>食品・健康食品</option>
+              <option>自動車・部品</option>
+              <option>電機・電子</option>
+              <option>金属・機械加工</option>
+              <option>その他製造業</option>
+              <option>教育・研究機関</option>
+              <option>その他</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>ご担当者名 <span class="req">必須</span></label>
+            <input type="text" name="name" placeholder="例：山田 太郎" required>
+          </div>
+          <div class="form-group">
+            <label>部署・役職 <span class="opt">任意</span></label>
+            <input type="text" name="department" placeholder="例：人事部 教育担当">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>メールアドレス <span class="req">必須</span></label>
+          <input type="email" name="email" placeholder="例：info@example.co.jp" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>電話番号 <span class="opt">任意</span></label>
+            <input type="tel" name="phone" placeholder="例：03-0000-0000">
+          </div>
+          <div class="form-group">
+            <label>利用予定人数 <span class="opt">任意</span></label>
+            <select name="headcount">
+              <option value="">選択してください</option>
+              <option>30名未満</option>
+              <option>30〜50名</option>
+              <option>51〜100名</option>
+              <option>101〜200名</option>
+              <option>201〜500名</option>
+              <option>500名以上</option>
+              <option>未定</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>ご希望のプラン</label>
+          <input type="text" id="planDisplay" value="企業契約プラン" readonly style="color:var(--gold);font-weight:600;cursor:default;">
+        </div>
+
+        <div class="form-group">
+          <label>ご質問・ご要望 <span class="opt">任意</span></label>
+          <textarea name="message" placeholder="ご不明点・ご要望・現在の教育課題などをご自由にお書きください。"></textarea>
+        </div>
+
+        <div class="privacy-check">
+          <input type="checkbox" id="privacyCheck" required>
+          <label for="privacyCheck">
+            <a href="https://sangyo-tech.github.io/top/privacy/" target="_blank">プライバシーポリシー</a>に同意します。送信いただいた情報はお申し込みの対応にのみ使用し、第三者には提供いたしません。
+          </label>
+        </div>
+
+        <button type="submit" class="btn-submit">📩 送信する</button>
+      </form>
+      <div class="success-box" id="successBox">
+        <div class="s-icon">✅</div>
+        <h3>送信が完了しました</h3>
+        <p>お申し込みいただきありがとうございます。<br>担当者より3営業日以内にご連絡いたします。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDE -->
+  <div class="side-stack">
+    <div class="side-card gold-border">
+      <div class="side-title">💡 お申し込み前にご確認ください</div>
+      <ul class="info-list">
+        <li><span class="ic">✦</span>企業契約は最低30,000円/月（30名未満も同額）</li>
+        <li><span class="ic">✦</span>1,000円/人・月　31名以上は実費計算</li>
+        <li><span class="ic">✦</span>年間契約・1年分一括前払い（銀行振込）</li>
+        <li><span class="ic">✦</span>月途中の申し込みは日割り対応なし</li>
+        <li><span class="ic">✦</span>解約はいつでも可能（返金不可）</li>
+        <li><span class="ic">✦</span>500名以上は別途お見積もり</li>
+        <li><span class="ic">✦</span>教材（品質大全）は任意購入・20,000円/冊。動画内容を文章・資料でまとめたテキストで、振り返りや辞書的な使い方に便利です</li>
+      </ul>
+      <div class="side-contact">
+        ご不明な点はお気軽にどうぞ。<br>
+        <a href="https://forms.gle/SZubCNmGTHTivc3H6">→ お問い合わせフォーム</a>
+      </div>
+    </div>
+
+    <div class="side-card">
+      <div class="side-title">🎓 まずは無料体験から</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">品質管理 基礎コースを無料でお試しいただけます。</p>
+      <a href="https://forms.gle/W9AEgSZJLVy9AcdW9" class="btn-side-outline">無料体験を試す →</a>
+    </div>
+
+    <div class="side-card">
+      <div class="side-title">📚 コース一覧を確認する</div>
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:0.5rem;">全コンテンツ178本以上。学べる内容を確認できます。</p>
+      <a href="https://sangyo-tech-course.studio.site/" class="btn-side-outline">コース一覧を見る →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="https://sangyo-tech.github.io/top/">TOP</a>
+    <a href="https://sangyo-tech.github.io/Pricing/">料金プラン</a>
+    <a href="https://sangyo-tech.github.io/top/tokushoho/">特定商取引法に基づく表記</a>
+    <a href="https://sangyo-tech.github.io/top/privacy/">プライバシーポリシー</a>
+    <a href="https://forms.gle/SZubCNmGTHTivc3H6">お問い合わせ</a>
+  </div>
+  <p>© 産業技術アカデミー　Product by Qulio LLC</p>
+</footer>
+
+<script>
+function selectPlan(el, planName) {
+  document.querySelectorAll('.plan-select-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('selectedPlan').value = planName;
+  document.getElementById('planDisplay').value = planName;
+}
+function handleSubmit(e) {
+  e.preventDefault();
+  // 実際の送信はGoogle Forms等へ遷移させてください
+  window.location.href = 'https://forms.gle/CguV7mXyih9ehYSKA';
+}
+</script>
+</body>
+</html>
