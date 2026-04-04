@@ -496,10 +496,17 @@ function selectPlan(el, planName) {
   document.getElementById('planDisplay').value = planName;
 }
 function handleSubmit(e) {
-  e.preventDefault();
-  // 実際の送信はGoogle Forms等へ遷移させてください
-  window.location.href = 'https://forms.gle/CguV7mXyih9ehYSKA';
-}
+      e.preventDefault();
+      var form = document.getElementById('applyForm');
+      var company = form.querySelector('[name="company"]') ? form.querySelector('[name="company"]').value : '';
+      var dept = form.querySelector('[name="department"]') ? form.querySelector('[name="department"]').value : '';
+      var email = form.querySelector('[name="email"]') ? form.querySelector('[name="email"]').value : '';
+      var baseUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSd2B2mrw-cHRj8xgIMZavqPw6eYSxo1Q5hnxWLrTUSzZWM0YA/viewform';
+      var params = '?usp=pp_url&entry.953686951=' + encodeURIComponent(company) + '&entry.1938031396=' + encodeURIComponent(dept) + '&emailAddress=' + encodeURIComponent(email);
+      window.open(baseUrl + params, '_blank');
+      var btn = form.querySelector('button[type="submit"]');
+      if (btn) { btn.textContent = 'Google Formsが開きました'; btn.disabled = true; }
+    }
 </script>
 </body>
 </html>
