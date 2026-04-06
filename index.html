@@ -632,7 +632,7 @@
 
       <div class="step-tag">✦ STEP 1</div>
 
-      <div class="step-title">ご希望のプランを選択</div>
+      <div class="step-title">内容を選択</div>
 
     </div>
 
@@ -1033,19 +1033,9 @@ function handleSubmit(e) {
 
   var formUrl, params;
 
-  if (isContact) {
+  formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSczAVnQjP_7pjDaR3HL3-mHh0ONIt8TXn-EKQzRHkjHMp1V3Q/formResponse";
 
-    formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdXqRc_BKzP0hnDUVpO8MsT3Hg6vn3dA9GqZlO6Y6O1e7FbMQ/formResponse";
-
-    params = "entry.710444143=" + encodeURIComponent(company) + "&entry.875504950=" + encodeURIComponent(dept) + "&entry.1688167511=" + encodeURIComponent(email);
-
-  } else {
-
-    formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSd2B2mrw-cHRj8xgIMZavqPw6eYSxo1Q5hnxWLrTUSzZWM0YA/formResponse";
-
-    params = "entry.953686951=" + encodeURIComponent(company) + "&entry.1938031396=" + encodeURIComponent(dept) + "&emailAddress=" + encodeURIComponent(email);
-
-  }
+  params = "entry.1278871105=" + encodeURIComponent(company) + "&entry.586933148=" + encodeURIComponent(dept) + "&entry.2060674322=" + encodeURIComponent(name) + "&entry.1834784742=" + encodeURIComponent(email) + "&entry.1255932742=" + encodeURIComponent(phone) + "&entry.618676285=" + encodeURIComponent(plan) + "&entry.598134875=" + encodeURIComponent(message);
 
   var iframe = document.createElement("iframe");
 
