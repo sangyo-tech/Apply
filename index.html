@@ -1023,6 +1023,10 @@ function handleSubmit(e) {
 
   var phone = form.querySelector('[name="phone"]')?.value || "";
 
+  var industry = form.querySelector('[name="industry"]')?.value || "";
+
+  var headcount = form.querySelector('[name="headcount"]')?.value || "";
+
   var message = form.querySelector('[name="message"]')?.value || "";
 
   var plan = document.getElementById("selectedPlan")?.value || "";
@@ -1035,7 +1039,7 @@ function handleSubmit(e) {
 
   formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSczAVnQjP_7pjDaR3HL3-mHh0ONIt8TXn-EKQzRHkjHMp1V3Q/formResponse";
 
-  params = "entry.1278871105=" + encodeURIComponent(company) + "&entry.586933148=" + encodeURIComponent(dept) + "&entry.2060674322=" + encodeURIComponent(name) + "&entry.1834784742=" + encodeURIComponent(email) + "&entry.1255932742=" + encodeURIComponent(phone) + "&entry.618676285=" + encodeURIComponent(plan) + "&entry.598134875=" + encodeURIComponent(message);
+  params = "entry.1278871105=" + encodeURIComponent(company) + "&entry.586933148=" + encodeURIComponent(dept) + "&entry.2060674322=" + encodeURIComponent(name) + "&entry.1834784742=" + encodeURIComponent(email) + "&entry.1255932742=" + encodeURIComponent(phone) + "&entry.618676285=" + encodeURIComponent(plan) + "&entry.598134875=" + encodeURIComponent(message) + "&entry.100537684=" + encodeURIComponent(industry) + "&entry.2071118681=" + encodeURIComponent(headcount);
 
   var iframe = document.createElement("iframe");
 
