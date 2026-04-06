@@ -1001,6 +1001,7 @@ function selectPlan(el, planName) {
   el.classList.add("selected");
 
   document.getElementById("selectedPlan").value = planName;
+  document.getElementById("planDisplay").value = planName;
 
   document.getElementById("applyForm").scrollIntoView({behavior:"smooth"});
 
