@@ -1070,6 +1070,40 @@ function selectPlan(el, planName) {
   document.getElementById("applyForm").scrollIntoView({behavior:"smooth"});
 }
 
+function initPlanFromUrl() {
+  var params = new URLSearchParams(window.location.search);
+  var rawPlan = (params.get("plan") || params.get("type") || params.get("course") || "").toLowerCase();
+  if (!rawPlan) return;
+
+  var planMap = {
+    free: "無料体験",
+    trial: "無料体験",
+    sample: "無料体験",
+    corporate: "企業契約プラン",
+    company: "企業契約プラン",
+    business: "企業契約プラン",
+    monthly: "企業契約プラン",
+    annual: "企業契約プラン",
+    yearly: "企業契約プラン",
+    contact: "お問い合わせ",
+    inquiry: "お問い合わせ",
+    support: "支援サービス",
+    service: "支援サービス",
+    bulk: "大口・要相談（500名以上）",
+    book: "教材（品質大全）購入"
+  };
+
+  var targetPlan = planMap[rawPlan];
+  if (!targetPlan) return;
+
+  var targetCard = Array.from(document.querySelectorAll(".plan-select-card")).find(function(card) {
+    return card.getAttribute("onclick") && card.getAttribute("onclick").indexOf("'" + targetPlan + "'") !== -1;
+  });
+  if (targetCard) selectPlan(targetCard, targetPlan);
+}
+
+document.addEventListener("DOMContentLoaded", initPlanFromUrl);
+
 function handleSubmit(e) {
   e.preventDefault();
   var form = document.getElementById("applyForm");
@@ -1114,11 +1148,13 @@ function handleSubmit(e) {
   }
   overlay.style.display = "flex";
   if (isTrial) {
-    document.getElementById("thankYouTitle").textContent = "お申込みいただき有難う御座います";
-    document.getElementById("thankYouMsg").innerHTML = 'さあ！無料体験を始めましょう！<br><a href="https://trial.sangyo-tech.jp/" style="color:#4fc3f7;font-weight:700;font-size:1.1rem" target="_blank">無料体験ページはこちら →</a>';
+    document.getElementById("thankYouTitle").textContent = "お申し込みありがとうございます";
+    document.getElementById("thankYouMsg").textContent = "";
+    document.getElementById("thankYouMsg").style.display = "none";
   } else {
     document.getElementById("thankYouTitle").textContent = "送信ありがとうございます";
     document.getElementById("thankYouMsg").textContent = "お申し込み内容を受け付けました。担当よりご連絡いたします。";
+    document.getElementById("thankYouMsg").style.display = "block";
   }
   form.reset();
   document.querySelectorAll(".plan-select-card").forEach(c => c.classList.remove("selected"));
@@ -1134,13 +1170,13 @@ function handleSubmit(e) {
 
 <div style="font-size:3rem;margin-bottom:16px">✅</div>
 
-<h2 style="color:#fff;font-size:1.5rem;margin-bottom:12px" id="thankYouTitle">お申込みいただき有難う御座います</h2>
+<h2 style="color:#fff;font-size:1.5rem;margin-bottom:12px" id="thankYouTitle">お申し込みありがとうございます</h2>
 
 <p style="color:rgba(255,255,255,.7);margin-bottom:24px">内容を確認のうえ、担当者よりご連絡いたします。</p>
 
 <div id="trialLink" style="display:none;background:linear-gradient(135deg,#15803d,#22a06b);border-radius:12px;padding:20px;margin-bottom:24px">
 
-<p style="color:#d4fbe8;font-size:.9rem;margin-bottom:8px">無料体験をお申込みいただきありがとうございます</p>
+<p style="color:#d4fbe8;font-size:.9rem;margin-bottom:8px">無料体験をお申し込みいただきありがとうございます</p>
 
 <a href="https://trial.sangyo-tech.jp/" style="color:#fff;font-size:1.2rem;font-weight:700;text-decoration:none;display:inline-block;padding:10px 24px;background:rgba(255,255,255,.15);border-radius:8px">🎓 無料体験ページはこちら →</a>
 
