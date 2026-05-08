@@ -1074,20 +1074,28 @@ function handleSubmit(e) {
   var message   = form.querySelector('[name="message"]')?.value || "";
   var plan      = document.getElementById("selectedPlan")?.value || "";
   var isTrial   = plan.indexOf("無料体験") > -1;
+  var planForGoogle = {
+    "大口・要相談（500名以上）": "大口相談(500人以上)",
+    "教材（品質大全）購入": "教材購入",
+    "お問い合わせ": "研修・コンテンツ・その他に関するお問い合わせ"
+  }[plan] || plan;
+  var phoneForGoogle = phone.trim() || "未入力";
 
   // GETパラメータでGoogleフォームに送信（テスト済み・確実に動作する方式）
   var baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSczAVnQjP_7pjDaR3HL3-mHh0ONIt8TXn-EKQzRHkjHMp1V3Q/formResponse";
-  var params = "entry.1213110029=" + encodeURIComponent(company)
-    + "&entry.508848148="  + encodeURIComponent(industry)
-    + "&entry.2043576900=" + encodeURIComponent(userName)
-    + "&entry.508931378="  + encodeURIComponent(dept)
-    + "&entry.340744627="  + encodeURIComponent(email)
-    + "&entry.35570863="   + encodeURIComponent(phone)
-    + "&entry.727186497="  + encodeURIComponent(plan)
-    + "&entry.1857586960=" + encodeURIComponent(headcount)
-    + "&entry.1495647258=" + encodeURIComponent(message);
+  var params = new URLSearchParams();
+  params.set("entry.1213110029", company);
+  params.set("entry.508848148", industry);
+  params.set("entry.2043576900", userName);
+  params.set("entry.508931378", dept);
+  params.set("entry.340744627", email);
+  params.set("entry.35570863", phoneForGoogle);
+  params.set("entry.727186497", planForGoogle);
+  params.set("entry.1857586960", headcount);
+  params.set("entry.1495647258", message);
+  params.set("submit", "Submit");
 
-  var submitUrl = baseUrl + "?" + params;
+  var submitUrl = baseUrl + "?" + params.toString();
 
   // 隠しiframeでGETリクエストを実行（ページ遷移なし）
   var iframe = document.createElement("iframe");
