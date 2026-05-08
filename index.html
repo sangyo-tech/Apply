@@ -942,11 +942,11 @@
             <div class="payment-title" style="margin-top:.1rem;">カード決済プラン</div>
             <label class="payment-choice">
               <input type="radio" name="cardPlan" value="annual_campaign" checked>
-              <span><strong>年間プラン キャンペーン</strong>16,500円（税込・1名あたり） / 2026年7月31日まで</span>
+              <span><strong>年間プラン キャンペーン</strong>17,160円（税込・カード決済手数料4%込・1名あたり） / 2026年7月31日まで</span>
             </label>
             <label class="payment-choice">
               <input type="radio" name="cardPlan" value="monthly">
-              <span><strong>月額プラン</strong>3,300円（税込・1名・月）</span>
+              <span><strong>月額プラン</strong>3,432円（税込・カード決済手数料4%込・1名・月）</span>
             </label>
           </div>
         </div>
@@ -1172,8 +1172,8 @@ function handleSubmit(e) {
   var isCorporate = plan === "企業契約プラン";
   var isCardPayment = isCorporate && paymentMethod === "card";
   var cardPlanLabel = cardPlan === "monthly"
-    ? "月額プラン 3,300円（税込・1名・月）"
-    : "年間プラン キャンペーン 16,500円（税込・1名・年）";
+    ? "月額プラン 3,432円（税込・カード決済手数料4%込・1名・月）"
+    : "年間プラン キャンペーン 17,160円（税込・カード決済手数料4%込・1名・年）";
   var stripeUrls = {
     monthly: "https://buy.stripe.com/7sY6oH5Uw5x4dse5aZ2sM08",
     annual_campaign: "https://buy.stripe.com/00w4gz2Ik4t00Fs32R2sM06"
