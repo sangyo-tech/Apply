@@ -719,13 +719,13 @@ html,body{margin:0}.unav{background-color:#060d1a!important;border-bottom:1px so
 
       </div>
 
-      <div class="plan-select-card" onclick="selectPlan(this,'大口・要相談（500名以上）')">
+      <div class="plan-select-card" onclick="selectPlan(this,'大口・要相談（100名以上）')">
 
         <div class="radio-check"></div>
 
         <div class="p-icon">💼</div>
 
-        <div class="p-name">大口・要相談（500名以上）</div>
+        <div class="p-name">大口・要相談（100名以上）</div>
 
         <div class="p-price">要お見積もり</div>
 
@@ -938,7 +938,7 @@ html,body{margin:0}.unav{background-color:#060d1a!important;border-bottom:1px so
             </label>
             <label class="payment-choice">
               <input type="radio" name="paymentMethod" value="card">
-              <span><strong>カード決済</strong>送信後、Stripeの決済ページへ移動します。</span>
+              <span><strong>カード決済</strong>送信後、Stripeの決済ページへ移動します。ログイン情報は決済確認後にご案内します。</span>
             </label>
           </div>
           <div class="card-plan-options" id="cardPlanOptions">
@@ -950,6 +950,10 @@ html,body{margin:0}.unav{background-color:#060d1a!important;border-bottom:1px so
             <label class="payment-choice">
               <input type="radio" name="cardPlan" value="monthly">
               <span><strong>月額プラン</strong>3,432円（税込・カード決済手数料4%込・1名・月）</span>
+            </label>
+            <label class="payment-choice">
+              <input type="radio" name="cardPlan" value="annual_normal">
+              <span><strong>年間通常価格</strong>34,320円（税込・カード決済手数料4%込・1名あたり）</span>
             </label>
           </div>
         </div>
@@ -990,7 +994,7 @@ html,body{margin:0}.unav{background-color:#060d1a!important;border-bottom:1px so
 
         <h3>送信が完了しました</h3>
 
-        <p>お申し込みいただきありがとうございます。<br>担当者より3営業日以内にご連絡いたします。</p>
+        <p>お申し込みいただきありがとうございます。<br>決済・入金確認後、担当者よりログイン情報をご案内いたします。</p>
 
       </div>
 
@@ -1013,14 +1017,14 @@ html,body{margin:0}.unav{background-color:#060d1a!important;border-bottom:1px so
         
 
         <li><span class="ic">✦</span>企業契約はカード決済または銀行振込を選択可能</li>
-        <li><span class="ic">✦</span>カード決済は送信後にStripe決済ページへ移動</li>
+        <li><span class="ic">✦</span>カード決済は送信後にStripe決済ページへ移動。ログイン情報は決済確認後にご案内</li>
         <li><span class="ic">✦</span>銀行振込は内容確認後、担当者よりご連絡</li>
 
         <li><span class="ic">✦</span>月途中の申し込みは日割り対応なし</li>
 
         <li><span class="ic">✦</span>解約はいつでも可能（返金不可）</li>
 
-        <li><span class="ic">✦</span>500名以上は別途お見積もり</li>
+        <li><span class="ic">✦</span>100名以上は別途お見積もり</li>
 
         <li><span class="ic">✦</span>教材（品質大全）は任意購入・20,000円/冊。動画内容を文章・資料でまとめたテキストで、振り返りや辞書的な使い方に便利です</li>
 
@@ -1135,7 +1139,7 @@ function initPlanFromUrl() {
     inquiry: "お問い合わせ",
     support: "支援サービス",
     service: "支援サービス",
-    bulk: "大口・要相談（500名以上）",
+    bulk: "大口・要相談（100名以上）",
     book: "教材（品質大全）購入"
   };
 
@@ -1174,15 +1178,19 @@ function handleSubmit(e) {
   var cardPlan = document.querySelector('[name="cardPlan"]:checked')?.value || "annual_campaign";
   var isCorporate = plan === "企業契約プラン";
   var isCardPayment = isCorporate && paymentMethod === "card";
-  var cardPlanLabel = cardPlan === "monthly"
-    ? "月額プラン 3,432円（税込・カード決済手数料4%込・1名・月）"
-      : "サービス開始キャンペーン価格 17,160円（税込・カード決済手数料4%込・1名・年）";
+  var cardPlanLabels = {
+    monthly: "月額プラン 3,432円（税込・カード決済手数料4%込・1名・月）",
+    annual_campaign: "サービス開始キャンペーン価格 17,160円（税込・カード決済手数料4%込・1名・年）",
+    annual_normal: "年間通常価格 34,320円（税込・カード決済手数料4%込・1名・年）"
+  };
+  var cardPlanLabel = cardPlanLabels[cardPlan] || cardPlanLabels.annual_campaign;
   var stripeUrls = {
     monthly: "https://buy.stripe.com/7sY6oH5Uw5x4dse5aZ2sM08",
-    annual_campaign: "https://buy.stripe.com/00w4gz2Ik4t00Fs32R2sM06"
+    annual_campaign: "https://buy.stripe.com/00w4gz2Ik4t00Fs32R2sM06",
+    annual_normal: "https://buy.stripe.com/bJe6oH96I4t0dsegTH2sM07"
   };
   var planForGoogle = {
-    "大口・要相談（500名以上）": "大口相談(500人以上)",
+    "大口・要相談（100名以上）": "大口相談(100人以上)",
     "教材（品質大全）購入": "教材購入",
     "お問い合わせ": "研修・コンテンツ・その他に関するお問い合わせ"
   }[plan] || plan;
