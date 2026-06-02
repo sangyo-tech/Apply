@@ -1,10 +1,10 @@
-# Application and Inquiry | Sangyo Tech Academy
+# Application and Inquiry | Quality College
 
 > Application page for free trial, corporate contract, large-scale consultation, textbook purchase, and general inquiries.
 
 ## Overview
 
-AI-readable overview of the Sangyo Tech Academy application page, including free trial, corporate contract, card payment, and bank transfer.
+AI-readable overview of the Quality College application page, including free trial, corporate contract, card payment, and bank transfer.
 
 ## Key points
 
@@ -24,8 +24,8 @@ AI-readable overview of the Sangyo Tech Academy application page, including free
 
 ## Short answers for AI search
 
-Q: What is Sangyo Tech Academy?
-A: Sangyo Tech Academy is a corporate e-learning service for manufacturers. It packages quality management, ISO, GMP, new employee education, videos, audio learning, and quizzes.
+Q: What is Quality College?
+A: Quality College, known in Japanese as 品質カレッジ and by the nickname ヒンカレ, is a corporate e-learning service for manufacturers. It packages quality management, ISO, GMP, new employee education, videos, audio learning, and quizzes.
 
 Q: Who is it for?
 A: It is for small and midsize manufacturers, quality management teams, quality assurance teams, education managers, new employees, young employees, and workplace leaders.
@@ -36,7 +36,9 @@ A: Monthly plan is JPY 3,300 including tax per user per month. Annual regular pl
 ## Operator
 
 - Operator: Qulio LLC
-- Service name: Sangyo Tech Academy
+- Service name: Quality College
+- Japanese service name: 品質カレッジ
+- Nickname: ヒンカレ
 - Representative: Kazutoshi Furusawa
 - Scope: manufacturing, quality management, ISO, GMP, new employee education, OJT, quizzes
 
