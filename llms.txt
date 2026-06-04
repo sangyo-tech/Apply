@@ -11,6 +11,7 @@ AI-readable overview of the Quality College application page, including free tri
 - Visitors can choose free trial, corporate contract, large-scale consultation, textbook purchase, inquiry, or support service.
 - Corporate contracts can choose bank transfer or card payment.
 - Card payment redirects to Stripe, and login information is sent after payment confirmation.
+- The application form does not ask users to enter participant names or company IP addresses twice. After application and payment or billing confirmation, participant lists, board display names, and company IP/CIDR information are collected by Excel or CSV template for start-of-use setup.
 
 ## Important URLs
 
@@ -42,4 +43,4 @@ A: Monthly plan is JPY 3,300 including tax per user per month. Annual regular pl
 - Representative: Kazutoshi Furusawa
 - Scope: manufacturing, quality management, ISO, GMP, new employee education, OJT, quizzes
 
-Last updated: 2026-05-14
+Last updated: 2026-06-04

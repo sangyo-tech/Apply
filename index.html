@@ -743,7 +743,7 @@
 
         <div class="flow-num">3</div>
 
-        <div class="flow-step-label">内容確認・<br>ご説明</div>
+        <div class="flow-step-label">内容確認・<br>決済/請求</div>
 
       </div>
 
@@ -751,7 +751,7 @@
 
         <div class="flow-num">4</div>
 
-        <div class="flow-step-label">契約・<br>アカウント発行</div>
+        <div class="flow-step-label">名簿/IPを<br>Excel送付</div>
 
       </div>
 
@@ -759,7 +759,7 @@
 
         <div class="flow-num">5</div>
 
-        <div class="flow-step-label">学習<br>開始</div>
+        <div class="flow-step-label">設定完了・<br>利用開始</div>
 
       </div>
 
@@ -1019,33 +1019,11 @@
 
 
 
-        <div class="board-access-box" aria-labelledby="boardAccessTitle">
-          <div class="board-access-title" id="boardAccessTitle">掲示板の会社IP投稿設定</div>
-          <p class="board-access-lead">会社ネットワークから掲示板へ簡単に投稿できるようにするための確認項目です。個人名ではなく、会社名・拠点名・部署名などの固定表示名を推奨します。</p>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>掲示板の固定表示名 <span class="opt">任意</span></label>
-              <input type="text" name="boardDisplayName" placeholder="例：○○製作所 品質保証部">
-              <p class="board-access-note">未入力の場合は、会社名をもとに確認して設定します。</p>
-            </div>
-
-            <div class="form-group">
-              <label>IP固定投稿の利用希望 <span class="opt">任意</span></label>
-              <select name="boardIpUse">
-                <option value="">選択してください</option>
-                <option>利用したい</option>
-                <option>相談して決めたい</option>
-                <option>利用しない</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>会社のグローバルIPアドレス / CIDR <span class="opt">分かる場合</span></label>
-            <input type="text" name="companyIp" placeholder="例：203.0.113.10 / 203.0.113.0/24">
-            <p class="board-access-note">社内ネットワークから利用する場合の固定IPです。不明な場合は空欄のままで構いません。</p>
-          </div>
+        <div class="board-access-box" aria-labelledby="startSetupTitle">
+          <div class="board-access-title" id="startSetupTitle">利用開始設定について</div>
+          <p class="board-access-lead">申込フォームでは、会社名・ご担当者名・連絡先だけを確認します。受講者名簿、掲示板で使う固定表示名、会社IP/CIDRは、申込後にExcelまたはCSVで送付いただく流れにします。</p>
+          <p class="board-access-note">個人情報やIP情報を画面上で二重入力する必要はありません。決済・請求確認後、こちらから名簿テンプレートをご案内し、受領後に利用開始設定を行います。</p>
+          <p class="board-access-note">テンプレート例：<a href="/templates/quality-college-user-ip-template.csv" download>利用者名簿・IP情報CSV</a></p>
         </div>
 
 
@@ -1105,7 +1083,7 @@
 
           <label for="privacyCheck">
 
-            <a href="https://sangyo-tech.jp/privacy/" target="_blank">プライバシーポリシー</a>に同意します。送信いただいた情報はお申し込み対応、本人確認補助、不正利用防止、掲示板の投稿管理、サポート対応のために使用します。IPアドレスやブラウザ情報を管理目的で保存する場合があります。
+            <a href="https://sangyo-tech.jp/privacy/" target="_blank">プライバシーポリシー</a>に同意します。送信いただいた情報はお申し込み対応、本人確認補助、不正利用防止、掲示板の投稿管理、サポート対応のために使用します。利用者名簿や会社IP/CIDRは、申込後にExcelまたはCSVで別途ご案内・受領します。
 
           </label>
 
@@ -1148,6 +1126,7 @@
         <li><span class="ic">✦</span>企業契約はカード決済または銀行振込を選択可能</li>
         <li><span class="ic">✦</span>カード決済は送信後にStripe決済ページへ移動。ログイン情報は決済確認後にご案内</li>
         <li><span class="ic">✦</span>銀行振込は内容確認後、担当者よりご連絡</li>
+        <li><span class="ic">✦</span>受講者名簿、掲示板の固定表示名、会社IP/CIDRは申込後にExcelまたはCSVで送付</li>
 
         <li><span class="ic">✦</span>月途中の申し込みは日割り対応なし</li>
 
@@ -1311,9 +1290,6 @@ function handleSubmit(e) {
   var industry  = form.querySelector('[name="industry"]')?.value || "";
   var headcount = form.querySelector('[name="headcount"]')?.value || "";
   var message   = form.querySelector('[name="message"]')?.value || "";
-  var boardDisplayName = form.querySelector('[name="boardDisplayName"]')?.value || "";
-  var boardIpUse = form.querySelector('[name="boardIpUse"]')?.value || "";
-  var companyIp = form.querySelector('[name="companyIp"]')?.value || "";
   var plan      = document.getElementById("selectedPlan")?.value || "";
   var isTrial   = plan.indexOf("無料体験") > -1;
   var paymentMethod = document.querySelector('[name="paymentMethod"]:checked')?.value || "bank";
@@ -1337,20 +1313,18 @@ function handleSubmit(e) {
     "お問い合わせ": "研修・コンテンツ・その他に関するお問い合わせ"
   }[plan] || plan;
   var phoneForGoogle = phone.trim() || "未入力";
-  var boardAccessLines = [
-    "【掲示板IP投稿設定】",
-    "固定表示名：" + (boardDisplayName.trim() || "未入力"),
-    "IP固定投稿の利用希望：" + (boardIpUse.trim() || "未選択"),
-    "会社IP/CIDR：" + (companyIp.trim() || "未入力")
+  var startSetupNote = [
+    "【利用開始設定】",
+    "受講者名簿、掲示板の固定表示名、会社IP/CIDRは申込後にExcelまたはCSVで別途受領する。"
   ];
   var messageForGoogle = message;
   if (isCorporate) {
     messageForGoogle = "【お支払い方法】" + (isCardPayment ? "カード決済" : "銀行振込")
       + (isCardPayment ? "\n【カード決済プラン】" + cardPlanLabel : "")
-      + "\n\n" + boardAccessLines.join("\n")
+      + "\n\n" + startSetupNote.join("\n")
       + (message ? "\n\n【ご質問・ご要望】\n" + message : "");
   } else {
-    messageForGoogle = boardAccessLines.join("\n")
+    messageForGoogle = startSetupNote.join("\n")
       + (message ? "\n\n【ご質問・ご要望】\n" + message : "");
   }
 
@@ -1390,14 +1364,14 @@ function handleSubmit(e) {
     document.getElementById("thankYouMsg").style.display = "none";
   } else if (isCardPayment) {
     document.getElementById("thankYouTitle").textContent = "決済ページへ移動します";
-    document.getElementById("thankYouMsg").textContent = "お申し込み内容を送信しました。続いてカード決済を完了してください。";
+    document.getElementById("thankYouMsg").textContent = "お申し込み内容を送信しました。続いてカード決済を完了してください。決済確認後、受講者名簿・会社IP情報のExcel/CSVテンプレートをご案内します。";
     document.getElementById("thankYouMsg").style.display = "block";
     setTimeout(function(){
       window.location.href = stripeUrls[cardPlan] || stripeUrls.annual_campaign;
     }, 900);
   } else {
     document.getElementById("thankYouTitle").textContent = "送信ありがとうございます";
-    document.getElementById("thankYouMsg").textContent = "お申し込み内容を受け付けました。担当よりご連絡いたします。";
+    document.getElementById("thankYouMsg").textContent = "お申し込み内容を受け付けました。担当よりご連絡し、受講者名簿・会社IP情報のExcel/CSVテンプレートをご案内します。";
     document.getElementById("thankYouMsg").style.display = "block";
   }
   form.reset();
