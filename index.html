@@ -1231,6 +1231,10 @@ function updatePaymentOptions() {
 function initPlanFromUrl() {
   var params = new URLSearchParams(window.location.search);
   var rawPlan = (params.get("plan") || params.get("type") || params.get("course") || "").toLowerCase();
+  if ((rawPlan === "trial" || rawPlan === "free" || rawPlan === "sample") && params.get("source") === "pricing") {
+    window.location.replace("https://trial.sangyo-tech.jp/");
+    return;
+  }
   if (!rawPlan) return;
 
   var planMap = {
