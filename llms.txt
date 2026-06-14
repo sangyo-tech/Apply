@@ -1,6 +1,6 @@
 # Application and Inquiry | Quality College
 
-> Application page for free trial, corporate contract, large-scale consultation, textbook purchase, and general inquiries.
+> Application and inquiry page. It guides visitors to the free trial and the pricing/application page for corporate contracts and consultations.
 
 ## Overview
 
